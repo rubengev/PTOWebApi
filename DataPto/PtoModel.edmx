@@ -1,0 +1,366 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PTEFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Answers">
+          <Key>
+            <PropertyRef Name="AnswerId" />
+          </Key>
+          <Property Name="AnswerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatientFormId" Type="int" Nullable="false" />
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+          <Property Name="AnswerChecked" Type="bit" Nullable="false" />
+          <Property Name="AnswerText" Type="nvarchar" MaxLength="2000" />
+        </EntityType>
+        <EntityType Name="FormType">
+          <Key>
+            <PropertyRef Name="FormTypeId" />
+          </Key>
+          <Property Name="FormTypeId" Type="int" Nullable="false" />
+          <Property Name="FormTypeName" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PatientId" />
+          </Key>
+          <Property Name="PatientId" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PatientForms">
+          <Key>
+            <PropertyRef Name="PatientFormId" />
+          </Key>
+          <Property Name="PatientFormId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatientId" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="FormTypeId" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="date" />
+          <Property Name="LastUpdatedOn" Type="date" />
+        </EntityType>
+        <EntityType Name="Questions">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="QuestionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FormTypeId" Type="int" Nullable="false" />
+          <Property Name="QuestionText" Type="nvarchar" MaxLength="500" />
+          <Property Name="DefaultAnswer" Type="bit" Nullable="false" />
+          <Property Name="QuestionIndex" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Answers_PatientForms">
+          <End Role="PatientForms" Type="Self.PatientForms" Multiplicity="1" />
+          <End Role="Answers" Type="Self.Answers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientForms">
+              <PropertyRef Name="PatientFormId" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="PatientFormId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Answers_Questions">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+          <End Role="Answers" Type="Self.Answers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="QuestionId" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientForms_FormType">
+          <End Role="FormType" Type="Self.FormType" Multiplicity="1" />
+          <End Role="PatientForms" Type="Self.PatientForms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormType">
+              <PropertyRef Name="FormTypeId" />
+            </Principal>
+            <Dependent Role="PatientForms">
+              <PropertyRef Name="FormTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientForms_Patient">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="PatientForms" Type="Self.PatientForms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="PatientForms">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questions_FormType">
+          <End Role="FormType" Type="Self.FormType" Multiplicity="1" />
+          <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormType">
+              <PropertyRef Name="FormTypeId" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="FormTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PTEFModelStoreContainer">
+          <EntitySet Name="Answers" EntityType="Self.Answers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FormType" EntityType="Self.FormType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PatientForms" EntityType="Self.PatientForms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Answers_PatientForms" Association="Self.FK_Answers_PatientForms">
+            <End Role="PatientForms" EntitySet="PatientForms" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answers_Questions" Association="Self.FK_Answers_Questions">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientForms_FormType" Association="Self.FK_PatientForms_FormType">
+            <End Role="FormType" EntitySet="FormType" />
+            <End Role="PatientForms" EntitySet="PatientForms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientForms_Patient" Association="Self.FK_PatientForms_Patient">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="PatientForms" EntitySet="PatientForms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questions_FormType" Association="Self.FK_Questions_FormType">
+            <End Role="FormType" EntitySet="FormType" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PTEFModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="AnswerId" />
+          </Key>
+          <Property Name="AnswerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientFormId" Type="Int32" Nullable="false" />
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <Property Name="AnswerChecked" Type="Boolean" Nullable="false" />
+          <Property Name="AnswerText" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PatientForm" Relationship="Self.FK_Answers_PatientForms" FromRole="Answers" ToRole="PatientForms" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_Answers_Questions" FromRole="Answers" ToRole="Questions" />
+        </EntityType>
+        <EntityType Name="FormType">
+          <Key>
+            <PropertyRef Name="FormTypeId" />
+          </Key>
+          <Property Name="FormTypeId" Type="Int32" Nullable="false" />
+          <Property Name="FormTypeName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PatientForms" Relationship="Self.FK_PatientForms_FormType" FromRole="FormType" ToRole="PatientForms" />
+          <NavigationProperty Name="Questions" Relationship="Self.FK_Questions_FormType" FromRole="FormType" ToRole="Questions" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PatientId" />
+          </Key>
+          <Property Name="PatientId" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PatientForms" Relationship="Self.FK_PatientForms_Patient" FromRole="Patient" ToRole="PatientForms" />
+        </EntityType>
+        <EntityType Name="PatientForm">
+          <Key>
+            <PropertyRef Name="PatientFormId" />
+          </Key>
+          <Property Name="PatientFormId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientId" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FormTypeId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+          <Property Name="LastUpdatedOn" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Answers" Relationship="Self.FK_Answers_PatientForms" FromRole="PatientForms" ToRole="Answers" />
+          <NavigationProperty Name="FormType" Relationship="Self.FK_PatientForms_FormType" FromRole="PatientForms" ToRole="FormType" />
+          <NavigationProperty Name="Patient" Relationship="Self.FK_PatientForms_Patient" FromRole="PatientForms" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="QuestionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormTypeId" Type="Int32" Nullable="false" />
+          <Property Name="QuestionText" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultAnswer" Type="Boolean" Nullable="false" />
+          <Property Name="QuestionIndex" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Answers" Relationship="Self.FK_Answers_Questions" FromRole="Questions" ToRole="Answers" />
+          <NavigationProperty Name="FormType" Relationship="Self.FK_Questions_FormType" FromRole="Questions" ToRole="FormType" />
+        </EntityType>
+        <Association Name="FK_Answers_PatientForms">
+          <End Role="PatientForms" Type="Self.PatientForm" Multiplicity="1" />
+          <End Role="Answers" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientForms">
+              <PropertyRef Name="PatientFormId" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="PatientFormId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Answers_Questions">
+          <End Role="Questions" Type="Self.Question" Multiplicity="1" />
+          <End Role="Answers" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="QuestionId" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientForms_FormType">
+          <End Role="FormType" Type="Self.FormType" Multiplicity="1" />
+          <End Role="PatientForms" Type="Self.PatientForm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormType">
+              <PropertyRef Name="FormTypeId" />
+            </Principal>
+            <Dependent Role="PatientForms">
+              <PropertyRef Name="FormTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questions_FormType">
+          <End Role="FormType" Type="Self.FormType" Multiplicity="1" />
+          <End Role="Questions" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormType">
+              <PropertyRef Name="FormTypeId" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="FormTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientForms_Patient">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="PatientForms" Type="Self.PatientForm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="PatientForms">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PTEFEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Answers" EntityType="Self.Answer" />
+          <EntitySet Name="FormTypes" EntityType="Self.FormType" />
+          <EntitySet Name="Patients" EntityType="Self.Patient" />
+          <EntitySet Name="PatientForms" EntityType="Self.PatientForm" />
+          <EntitySet Name="Questions" EntityType="Self.Question" />
+          <AssociationSet Name="FK_Answers_PatientForms" Association="Self.FK_Answers_PatientForms">
+            <End Role="PatientForms" EntitySet="PatientForms" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answers_Questions" Association="Self.FK_Answers_Questions">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientForms_FormType" Association="Self.FK_PatientForms_FormType">
+            <End Role="FormType" EntitySet="FormTypes" />
+            <End Role="PatientForms" EntitySet="PatientForms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questions_FormType" Association="Self.FK_Questions_FormType">
+            <End Role="FormType" EntitySet="FormTypes" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientForms_Patient" Association="Self.FK_PatientForms_Patient">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="PatientForms" EntitySet="PatientForms" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PTEFModelStoreContainer" CdmEntityContainer="PTEFEntities">
+          <EntitySetMapping Name="Answers">
+            <EntityTypeMapping TypeName="PTEFModel.Answer">
+              <MappingFragment StoreEntitySet="Answers">
+                <ScalarProperty Name="AnswerId" ColumnName="AnswerId" />
+                <ScalarProperty Name="PatientFormId" ColumnName="PatientFormId" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="AnswerChecked" ColumnName="AnswerChecked" />
+                <ScalarProperty Name="AnswerText" ColumnName="AnswerText" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FormTypes">
+            <EntityTypeMapping TypeName="PTEFModel.FormType">
+              <MappingFragment StoreEntitySet="FormType">
+                <ScalarProperty Name="FormTypeId" ColumnName="FormTypeId" />
+                <ScalarProperty Name="FormTypeName" ColumnName="FormTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="PTEFModel.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientForms">
+            <EntityTypeMapping TypeName="PTEFModel.PatientForm">
+              <MappingFragment StoreEntitySet="PatientForms">
+                <ScalarProperty Name="PatientFormId" ColumnName="PatientFormId" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="FormTypeId" ColumnName="FormTypeId" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="PTEFModel.Question">
+              <MappingFragment StoreEntitySet="Questions">
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="FormTypeId" ColumnName="FormTypeId" />
+                <ScalarProperty Name="QuestionText" ColumnName="QuestionText" />
+                <ScalarProperty Name="DefaultAnswer" ColumnName="DefaultAnswer" />
+                <ScalarProperty Name="QuestionIndex" ColumnName="QuestionIndex" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
