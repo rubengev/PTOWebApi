@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using WebApiPto.Models;
 using WebApiPto.DataClasses;
 
@@ -11,7 +8,7 @@ namespace WebApiPto.Classes
     {
 
 
-        public static PatientFormDto MapToDTO(PatientForm classMapFrom)
+        public static PatientFormDto MapToDto(PatientForm classMapFrom)
         {
             PatientFormDto retval = null;
             if (classMapFrom != null)
@@ -22,14 +19,14 @@ namespace WebApiPto.Classes
                     PatientId = classMapFrom.PatientId,
                     FormTypeId = classMapFrom.FormTypeId,
                     FormTypeName = classMapFrom.FormType.FormTypeName,
-                    CreatedOn = (DateTime)classMapFrom.CreatedOn,
+                    CreatedOn = classMapFrom.CreatedOn ?? DateTime.Now,
                     LastUpdatedOn = classMapFrom.LastUpdatedOn
                 };
             }
             return retval;
         }
 
-        public static PatientForm MapFromDTO(PatientFormDto classMapFrom)
+        public static PatientForm MapFromDto(PatientFormDto classMapFrom)
         {
             PatientForm retval = null;
             if (classMapFrom != null)
@@ -40,13 +37,13 @@ namespace WebApiPto.Classes
                     PatientId = classMapFrom.PatientId,
                     FormTypeId = classMapFrom.FormTypeId,
                     CreatedOn = classMapFrom.CreatedOn,
-                    LastUpdatedOn = (DateTime)classMapFrom.LastUpdatedOn
+                    LastUpdatedOn = classMapFrom.LastUpdatedOn
                 };
             }
             return retval;
         }
 
-        public static QuestionDto MapToDTO(Question classMapFrom)
+        public static QuestionDto MapToDto(Question classMapFrom)
         {
             QuestionDto retval = null;
             if (classMapFrom != null)
@@ -64,7 +61,7 @@ namespace WebApiPto.Classes
             return retval;
         }
 
-        public static QuestionDto MapToDTO(AnswerListView classMapFrom)
+        public static QuestionDto MapToDto(AnswerListView classMapFrom)
         {
             QuestionDto retval = null;
             if (classMapFrom != null)
@@ -82,24 +79,24 @@ namespace WebApiPto.Classes
             return retval;
         }
 
-        public static Question MapFromDTO(QuestionDto classMapFrom)
-        {
-            Question retval = null;
-            if (classMapFrom != null)
-            {
-                retval = new Question
-                {
-                    //QuestionId = classMapFrom.QuestionId,
-                    //FormTypeId = classMapFrom.FormTypeId,
-                    //QuestionText = classMapFrom.QuestionText,
-                    //DefaultAnswer = classMapFrom.DefaultAnswer,
-                    //QuestionIndex = classMapFrom.QuestionIndex
-                };
-            }
-            return retval;
-        }
+        //public static Question MapFromDto(QuestionDto classMapFrom)
+        //{
+        //    Question retval = null;
+        //    if (classMapFrom != null)
+        //    {
+        //        retval = new Question
+        //        {
+        //            //QuestionId = classMapFrom.QuestionId,
+        //            //FormTypeId = classMapFrom.FormTypeId,
+        //            //QuestionText = classMapFrom.QuestionText,
+        //            //DefaultAnswer = classMapFrom.DefaultAnswer,
+        //            //QuestionIndex = classMapFrom.QuestionIndex
+        //        };
+        //    }
+        //    return retval;
+        //}
 
-        public static FormTypeDto MapToDTO(FormType classMapFrom)
+        public static FormTypeDto MapToDto(FormType classMapFrom)
         {
             FormTypeDto retval = null;
             if (classMapFrom != null)
@@ -113,7 +110,7 @@ namespace WebApiPto.Classes
             return retval;
         }
 
-        public static PatientDto MapToDTO(PatientListView classMapFrom)
+        public static PatientDto MapToDto(PatientListView classMapFrom)
         {
             PatientDto retval = null;
             if (classMapFrom != null)
@@ -123,13 +120,13 @@ namespace WebApiPto.Classes
                     Id = classMapFrom.PatientId,
                     LastName = classMapFrom.LastName,
                     FirstName = classMapFrom.FirstName,
-                    LastVisitDate = (DateTime)classMapFrom.LastVisited
+                    LastVisitDate = classMapFrom.LastVisited ?? DateTime.Now
                 };
             }
             return retval;
         }
 
-        public static AnswerDto MapToDTO(Answer classMapFrom)
+        public static AnswerDto MapToDto(Answer classMapFrom)
         {
             AnswerDto retval = null;
             if (classMapFrom != null)
@@ -147,7 +144,7 @@ namespace WebApiPto.Classes
             return retval;
         }
 
-        public static Answer MapFromDTO(AnswerDto classMapFrom)
+        public static Answer MapFromDto(AnswerDto classMapFrom)
         {
             Answer retval = null;
             if (classMapFrom != null)

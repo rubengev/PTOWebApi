@@ -13,18 +13,18 @@ namespace WebApiPto.Controllers
 {
     public class AnswerController : ApiController
     {
-        private PTEFEntities db = new PTEFEntities();
+        private readonly PTEFEntities _db = new PTEFEntities();
 
         // GET: api/Answers
         public List<AnswerDto> GetAnswers()
         {
-            var col = db.Answers;
+            var col = _db.Answers;
 
             List<AnswerDto> items = new List<AnswerDto>();
 
             foreach (Answer item in col)
             {
-                items.Add(Mapper.MapToDTO(item));
+                items.Add(Mapper.MapToDto(item));
             }
             return items;
 
@@ -44,11 +44,11 @@ namespace WebApiPto.Controllers
                 return BadRequest();
             }
 
-            db.Entry(answer).State = EntityState.Modified;
+            _db.Entry(answer).State = EntityState.Modified;
 
             try
             {
-                db.SaveChanges();
+                _db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -74,8 +74,8 @@ namespace WebApiPto.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Answers.Add(answer);
-            db.SaveChanges();
+            _db.Answers.Add(answer);
+            _db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = answer.AnswerId }, answer);
         }
@@ -100,14 +100,14 @@ namespace WebApiPto.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool AnswerExists(int id)
         {
-            return db.Answers.Count(e => e.AnswerId == id) > 0;
+            return _db.Answers.Count(e => e.AnswerId == id) > 0;
         }
 
     }

@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Web;
+﻿using System.ComponentModel;
 
 namespace WebApiPto.Classes
 {
     public static class Enums
     {
-        public enum enFormType
+        public enum EnFormType
         {
             [Description("Lower Body")]
-            LB = 1,
+            Lb = 1,
             [Description("Neck / Upper Body")]
-            NeckUB = 2,
+            NeckUb = 2,
             [Description("Neck / Lower Body")]
-            NeckLB = 3,
+            NeckLb = 3,
             [Description("Uper Extremites")]
-            UE = 4,
+            Ue = 4,
             [Description("Lower Extremites")]
-            LE = 5,
+            Le = 5,
             [Description("Elbow / Hand")]
             ElbowHand = 6
 

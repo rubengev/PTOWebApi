@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -17,18 +14,18 @@ namespace WebApiPto.Controllers
 {
     public class PatientFormController : ApiController
     {
-        private PTEFEntities db = new PTEFEntities();
+        private PTEFEntities _db = new PTEFEntities();
 
         // GET: api/PatientForm
         public List<PatientFormDto> GetPatientForms(string id)
         {
-            var col = db.PatientForms.Where(x=> x.PatientId == id);
+            var col = _db.PatientForms.Where(x=> x.PatientId == id);
 
             List<PatientFormDto> items = new List<PatientFormDto>();
 
             foreach (PatientForm item in col)
             {
-                items.Add(Mapper.MapToDTO(item));
+                items.Add(Mapper.MapToDto(item));
             }
             return items;
         }
@@ -60,11 +57,11 @@ namespace WebApiPto.Controllers
                 return BadRequest();
             }
 
-            db.Entry(patientForm).State = EntityState.Modified;
+            _db.Entry(patientForm).State = EntityState.Modified;
 
             try
             {
-                await db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -90,8 +87,8 @@ namespace WebApiPto.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.PatientForms.Add(patientForm);
-            await db.SaveChangesAsync();
+            _db.PatientForms.Add(patientForm);
+            await _db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = patientForm.PatientFormId }, patientForm);
         }
@@ -100,14 +97,14 @@ namespace WebApiPto.Controllers
         [ResponseType(typeof(PatientForm))]
         public async Task<IHttpActionResult> DeletePatientForm(int id)
         {
-            PatientForm patientForm = await db.PatientForms.FindAsync(id);
+            PatientForm patientForm = await _db.PatientForms.FindAsync(id);
             if (patientForm == null)
             {
                 return NotFound();
             }
 
-            db.PatientForms.Remove(patientForm);
-            await db.SaveChangesAsync();
+            _db.PatientForms.Remove(patientForm);
+            await _db.SaveChangesAsync();
 
             return Ok(patientForm);
         }
@@ -116,14 +113,14 @@ namespace WebApiPto.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool PatientFormExists(int id)
         {
-            return db.PatientForms.Count(e => e.PatientFormId == id) > 0;
+            return _db.PatientForms.Count(e => e.PatientFormId == id) > 0;
         }
 
 
