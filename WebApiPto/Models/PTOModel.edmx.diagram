@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3cb3f59d152746caaf8cdd955bf66b62" Name="Diagram1">
+        <EntityTypeShape EntityType="PTEFModel.Answer" Width="1.5" PointX="10.5" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PTEFModel.FormType" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PTEFModel.Patient" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PTEFModel.PatientForm" Width="1.5" PointX="5.375" PointY="2.375" IsExpanded="true" />
+        <AssociationConnector Association="PTEFModel.FK_PatientForms_FormType" ManuallyRouted="false" />
+        <AssociationConnector Association="PTEFModel.FK_PatientForms_Patient" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PTEFModel.Question" Width="1.5" PointX="3" PointY="7.375" />
+        <AssociationConnector Association="PTEFModel.FK_Questions_FormType" />
+        <EntityTypeShape EntityType="PTEFModel.PatientListView" Width="1.5" PointX="9.875" PointY="1" />
+        <AssociationConnector Association="PTEFModel.FK_Answers_PatientForms" />
+        <AssociationConnector Association="PTEFModel.FK_Answers_Questions" />
+        <EntityTypeShape EntityType="PTEFModel.AnswerListView" Width="1.5" PointX="8.125" PointY="1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
