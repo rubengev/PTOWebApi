@@ -136,7 +136,7 @@ namespace WebApiPto.Controllers
            foreach (var item in formDetailDto.Questions)
             {
                 sb.Append(
-                    $"<QuestionDto><Answer>{item.Answer}</Answer><Checked>{item.Checked}</Checked><QuestionId>{item.Id}</QuestionId></QuestionDto>"
+                    $"<Question><Answer>{item.Answer}</Answer><Checked>{item.Checked}</Checked><QuestionId>{item.Id}</QuestionId></Question>"
                 );
             }
             sb.Append("</Questions>");
