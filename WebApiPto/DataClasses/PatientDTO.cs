@@ -4,11 +4,11 @@ namespace WebApiPto.DataClasses
 {
     public class PatientDto
     {
-        public string Id { get; set; }
-        public string LastName { get; set; }
-        public string FirstName { get; set; }
-
-        public DateTime LastVisitDate { get; set; }
+        public string id { get; set; }
+        public string lastName { get; set; }
+        public string firstName { get; set; }
+    
+        public DateTime lastVisitDate { get; set; }
 
     }
 }

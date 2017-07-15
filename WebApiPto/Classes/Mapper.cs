@@ -117,10 +117,10 @@ namespace WebApiPto.Classes
             {
                 retval = new PatientDto
                 {
-                    Id = classMapFrom.PatientId,
-                    LastName = classMapFrom.LastName,
-                    FirstName = classMapFrom.FirstName,
-                    LastVisitDate = classMapFrom.LastVisited ?? DateTime.Now
+                    id = classMapFrom.PatientId,
+                    lastName = classMapFrom.LastName,
+                    firstName = classMapFrom.FirstName,
+                    lastVisitDate = classMapFrom.LastVisited ?? DateTime.Now
                 };
             }
             return retval;
