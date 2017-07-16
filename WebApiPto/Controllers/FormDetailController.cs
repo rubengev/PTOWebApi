@@ -9,6 +9,8 @@ using System.Web.Http.Description;
 using WebApiPto.Models;
 using WebApiPto.DataClasses;
 using WebApiPto.Classes;
+using System.Xml;
+using System.Data.SqlTypes;
 
 namespace WebApiPto.Controllers
 {
@@ -34,8 +36,8 @@ namespace WebApiPto.Controllers
             }
             FormDetailDto formDetails = new FormDetailDto {
                 Id = 0,
-                Date = DateTime.Now.Date,
-                FormType = formType.FormTypeName,
+                VisitDate = DateTime.Now.Date,
+                FormTypeName = formType.FormTypeName,
                 FormTypeId = formtypeid,
                 PatientId = patientid,
                 Questions = questions
@@ -62,9 +64,9 @@ namespace WebApiPto.Controllers
             }
 
             FormDetailDto formDetails = new FormDetailDto {
-                Id = 0,
-                Date = DateTime.Now.Date,
-                FormType = patientForm.FormType.FormTypeName,
+                Id = id,
+                VisitDate = DateTime.Now.Date,
+                FormTypeName = patientForm.FormType.FormTypeName,
                 FormTypeId = patientForm.FormType.FormTypeId,
                 PatientId = patientForm.PatientId,
                 Questions = questions
@@ -112,20 +114,31 @@ namespace WebApiPto.Controllers
             var param4 = new SqlParameter
             {
                 ParameterName = "@XmlData",
-                SqlDbType = SqlDbType.Xml,
+                SqlDbType = SqlDbType.Text,
                 Direction = ParameterDirection.Input,
-                Value = GetXmlValue(formDetailDto)
+                Value = new SqlXml(new XmlTextReader(GetXmlValue(formDetailDto), XmlNodeType.Document, null))
             };
 
-            int retval = _db.Database.ExecuteSqlCommand(
-                "[dbo].spSaveFormDetail @PatientFormId, @FormTypeId, @PatientId, @XmlData",
-                new SqlParameter("PatientFormId", param1),
-                new SqlParameter("FormTypeId", param2),
-                new SqlParameter("PatientId", param3),
-                new SqlParameter("XmlData", param4)
-            );
+            var param5 = new SqlParameter
+            {
+                ParameterName = "@SavedId",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output,
+                Value = 0
+            };
 
-            return CreatedAtRoute("DefaultApi", new { id = retval }, formDetailDto);
+            try
+            {
+                _db.Database.ExecuteSqlCommand(
+                    "spSaveFormDetail @PatientFormId, @FormTypeId, @PatientId, @XmlData, @SavedId OUT",
+                        param1, param2, param3, param4, param5);
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc.Message);
+            }            
+
+            return CreatedAtRoute("DefaultApi", new { id = param5.Value }, formDetailDto);
         }
 
 

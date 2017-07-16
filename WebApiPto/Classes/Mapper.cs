@@ -15,12 +15,11 @@ namespace WebApiPto.Classes
             {
                 retval = new PatientFormDto
                 {
-                    PatientFormId = classMapFrom.PatientFormId,
+                    Id = classMapFrom.PatientFormId,
                     PatientId = classMapFrom.PatientId,
                     FormTypeId = classMapFrom.FormTypeId,
                     FormTypeName = classMapFrom.FormType.FormTypeName,
-                    CreatedOn = classMapFrom.CreatedOn ?? DateTime.Now,
-                    LastUpdatedOn = classMapFrom.LastUpdatedOn
+                    VisitDate = classMapFrom.CreatedOn ?? DateTime.Now
                 };
             }
             return retval;
@@ -33,11 +32,11 @@ namespace WebApiPto.Classes
             {
                 retval = new PatientForm
                 {
-                    PatientFormId = classMapFrom.PatientFormId,
+                    PatientFormId = classMapFrom.Id,
                     PatientId = classMapFrom.PatientId,
                     FormTypeId = classMapFrom.FormTypeId,
-                    CreatedOn = classMapFrom.CreatedOn,
-                    LastUpdatedOn = classMapFrom.LastUpdatedOn
+                    CreatedOn = classMapFrom.VisitDate,
+                    LastUpdatedOn = DateTime.Now
                 };
             }
             return retval;
@@ -117,10 +116,10 @@ namespace WebApiPto.Classes
             {
                 retval = new PatientDto
                 {
-                    id = classMapFrom.PatientId,
-                    lastName = classMapFrom.LastName,
-                    firstName = classMapFrom.FirstName,
-                    lastVisitDate = classMapFrom.LastVisited ?? DateTime.Now
+                    Id = classMapFrom.PatientId,
+                    LastName = classMapFrom.LastName,
+                    FirstName = classMapFrom.FirstName,
+                    LastVisitDate = classMapFrom.LastVisited ?? DateTime.Now
                 };
             }
             return retval;

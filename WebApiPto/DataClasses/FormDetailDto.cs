@@ -7,10 +7,9 @@ namespace WebApiPto.DataClasses
     {
         public int Id { get; set; }
         public int FormTypeId { get; set; }
-        public string FormType { get; set; }
+        public string FormTypeName { get; set; }
         public string PatientId  { get; set; }
-        public DateTime Date{ get; set; }
-
+        public DateTime VisitDate{ get; set; }
         public List<QuestionDto> Questions { get; set; }
     }
 }
