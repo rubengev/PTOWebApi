@@ -19,7 +19,7 @@ namespace WebApiPto.Classes
                     PatientId = classMapFrom.PatientId,
                     FormTypeId = classMapFrom.FormTypeId,
                     FormTypeName = classMapFrom.FormType.FormTypeName,
-                    VisitDate = classMapFrom.CreatedOn ?? DateTime.Now
+                    FormDate = classMapFrom.FormDate
                 };
             }
             return retval;
@@ -35,7 +35,7 @@ namespace WebApiPto.Classes
                     PatientFormId = classMapFrom.Id,
                     PatientId = classMapFrom.PatientId,
                     FormTypeId = classMapFrom.FormTypeId,
-                    CreatedOn = classMapFrom.VisitDate,
+                    FormDate = classMapFrom.FormDate,
                     LastUpdatedOn = DateTime.Now
                 };
             }
@@ -119,7 +119,7 @@ namespace WebApiPto.Classes
                     Id = classMapFrom.PatientId,
                     LastName = classMapFrom.LastName,
                     FirstName = classMapFrom.FirstName,
-                    LastVisitDate = classMapFrom.LastVisited ?? DateTime.Now
+                    LastVisitDate = classMapFrom.LastVisited
                 };
             }
             return retval;

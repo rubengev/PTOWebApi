@@ -8,7 +8,7 @@ namespace WebApiPto.DataClasses
         public string LastName { get; set; }
         public string FirstName { get; set; }
     
-        public DateTime LastVisitDate { get; set; }
+        public DateTime? LastVisitDate { get; set; }
 
     }
 }

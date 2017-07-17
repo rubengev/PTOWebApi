@@ -36,7 +36,7 @@ namespace WebApiPto.Controllers
             }
             FormDetailDto formDetails = new FormDetailDto {
                 Id = 0,
-                VisitDate = DateTime.Now.Date,
+                FormDate = DateTime.Now.Date,
                 FormTypeName = formType.FormTypeName,
                 FormTypeId = formtypeid,
                 PatientId = patientid,
@@ -65,7 +65,7 @@ namespace WebApiPto.Controllers
 
             FormDetailDto formDetails = new FormDetailDto {
                 Id = id,
-                VisitDate = DateTime.Now.Date,
+                FormDate = patientForm.FormDate,
                 FormTypeName = patientForm.FormType.FormTypeName,
                 FormTypeId = patientForm.FormType.FormTypeId,
                 PatientId = patientForm.PatientId,
@@ -113,13 +113,21 @@ namespace WebApiPto.Controllers
 
             var param4 = new SqlParameter
             {
+                ParameterName = "@FormDate",
+                SqlDbType = SqlDbType.Date,
+                Direction = ParameterDirection.Input,
+                Value = formDetailDto.FormDate
+            };
+
+            var param5 = new SqlParameter
+            {
                 ParameterName = "@XmlData",
-                SqlDbType = SqlDbType.Text,
+                SqlDbType = SqlDbType.Xml,
                 Direction = ParameterDirection.Input,
                 Value = new SqlXml(new XmlTextReader(GetXmlValue(formDetailDto), XmlNodeType.Document, null))
             };
 
-            var param5 = new SqlParameter
+            var param6 = new SqlParameter
             {
                 ParameterName = "@SavedId",
                 SqlDbType = SqlDbType.Int,
@@ -130,15 +138,17 @@ namespace WebApiPto.Controllers
             try
             {
                 _db.Database.ExecuteSqlCommand(
-                    "spSaveFormDetail @PatientFormId, @FormTypeId, @PatientId, @XmlData, @SavedId OUT",
-                        param1, param2, param3, param4, param5);
+                    "spSaveFormDetail @PatientFormId, @FormTypeId, @PatientId, @FormDate, @XmlData, @SavedId OUT",
+                        param1, param2, param3, param4, param5, param6);
             }
             catch (Exception exc)
             {
                 return BadRequest(exc.Message);
-            }            
+            }
 
-            return CreatedAtRoute("DefaultApi", new { id = param5.Value }, formDetailDto);
+            formDetailDto.Id = (int) param6.Value;
+
+            return CreatedAtRoute("DefaultApi", new { id = param6.Value }, formDetailDto);
         }
 
 

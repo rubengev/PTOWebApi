@@ -8,6 +8,6 @@ namespace WebApiPto.DataClasses
         public int FormTypeId { get; set; }
         public string FormTypeName { get; set; }
         public string PatientId { get; set; }
-        public DateTime VisitDate { get; set; }
+        public DateTime FormDate { get; set; }
     }
 }

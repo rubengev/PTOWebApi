@@ -23,8 +23,9 @@ namespace WebApiPto.Models
         public int PatientFormId { get; set; }
         public string PatientId { get; set; }
         public int FormTypeId { get; set; }
-        public Nullable<System.DateTime> CreatedOn { get; set; }
+        public System.DateTime CreatedOn { get; set; }
         public Nullable<System.DateTime> LastUpdatedOn { get; set; }
+        public System.DateTime FormDate { get; set; }
     
         public virtual FormType FormType { get; set; }
         public virtual Patient Patient { get; set; }

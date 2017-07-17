@@ -37,7 +37,8 @@
           <Property Name="PatientFormId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PatientId" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="FormTypeId" Type="int" Nullable="false" />
-          <Property Name="CreatedOn" Type="date" />
+          <Property Name="FormDate" Type="date" Nullable="false" />
+          <Property Name="CreatedOn" Type="date" Nullable="false" />
           <Property Name="LastUpdatedOn" Type="date" />
         </EntityType>
         <EntityType Name="Questions">
@@ -231,11 +232,12 @@ warning 6002: The table/view 'PTEFDev.dbo.PatientListView' does not have a prima
           <Property Name="PatientFormId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PatientId" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FormTypeId" Type="Int32" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="0" Nullable="false" />
           <Property Name="LastUpdatedOn" Type="DateTime" Precision="0" />
           <NavigationProperty Name="FormType" Relationship="Self.FK_PatientForms_FormType" FromRole="PatientForms" ToRole="FormType" />
           <NavigationProperty Name="Patient" Relationship="Self.FK_PatientForms_Patient" FromRole="PatientForms" ToRole="Patient" />
           <NavigationProperty Name="Answers" Relationship="PTEFModel.FK_Answers_PatientForms" FromRole="PatientForm" ToRole="Answer" />
+          <Property Name="FormDate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <Association Name="FK_PatientForms_FormType">
           <End Role="FormType" Type="Self.FormType" Multiplicity="1" />
@@ -404,6 +406,7 @@ warning 6002: The table/view 'PTEFDev.dbo.PatientListView' does not have a prima
           <EntitySetMapping Name="PatientForms">
             <EntityTypeMapping TypeName="PTEFModel.PatientForm">
               <MappingFragment StoreEntitySet="PatientForms">
+                <ScalarProperty Name="FormDate" ColumnName="FormDate" />
                 <ScalarProperty Name="PatientFormId" ColumnName="PatientFormId" />
                 <ScalarProperty Name="PatientId" ColumnName="PatientId" />
                 <ScalarProperty Name="FormTypeId" ColumnName="FormTypeId" />
