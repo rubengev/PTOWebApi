@@ -19,7 +19,7 @@ namespace WebApiPto.Controllers
         // GET: api/PatientForm
         public List<PatientFormDto> GetPatientForms(string id)
         {
-            var col = _db.PatientForms.Where(x=> x.PatientId == id);
+            var col = _db.PatientForms.Where(x => x.PatientId == id).OrderByDescending(x => x.FormDate);
 
             List<PatientFormDto> items = new List<PatientFormDto>();
 

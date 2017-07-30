@@ -28,7 +28,6 @@ namespace WebApiPto.Models
         public System.DateTime FormDate { get; set; }
     
         public virtual FormType FormType { get; set; }
-        public virtual Patient Patient { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Answer> Answers { get; set; }
     }

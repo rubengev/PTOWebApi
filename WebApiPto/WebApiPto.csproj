@@ -223,16 +223,12 @@
     <Compile Include="Models\FormType.cs">
       <DependentUpon>PTOModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Patient.cs">
-      <DependentUpon>PTOModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\PatientForm.cs">
       <DependentUpon>PTOModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PatientListView.cs">
       <DependentUpon>PTOModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Product.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

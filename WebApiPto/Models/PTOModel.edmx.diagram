@@ -7,13 +7,11 @@
       <Diagram DiagramId="3cb3f59d152746caaf8cdd955bf66b62" Name="Diagram1">
         <EntityTypeShape EntityType="PTEFModel.Answer" Width="1.5" PointX="10.5" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PTEFModel.FormType" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PTEFModel.Patient" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PTEFModel.PatientForm" Width="1.5" PointX="5.375" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PTEFModel.PatientForm" Width="1.5" PointX="5.875" PointY="1.75" IsExpanded="true" />
         <AssociationConnector Association="PTEFModel.FK_PatientForms_FormType" ManuallyRouted="false" />
-        <AssociationConnector Association="PTEFModel.FK_PatientForms_Patient" ManuallyRouted="false" />
         <EntityTypeShape EntityType="PTEFModel.Question" Width="1.5" PointX="3" PointY="7.375" />
         <AssociationConnector Association="PTEFModel.FK_Questions_FormType" />
-        <EntityTypeShape EntityType="PTEFModel.PatientListView" Width="1.5" PointX="9.875" PointY="1" />
+        <EntityTypeShape EntityType="PTEFModel.PatientListView" Width="1.5" PointX="3.625" PointY="0.5" />
         <AssociationConnector Association="PTEFModel.FK_Answers_PatientForms" />
         <AssociationConnector Association="PTEFModel.FK_Answers_Questions" />
         <EntityTypeShape EntityType="PTEFModel.AnswerListView" Width="1.5" PointX="8.125" PointY="1" />

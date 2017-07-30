@@ -22,14 +22,6 @@
           <Property Name="FormTypeId" Type="int" Nullable="false" />
           <Property Name="FormTypeName" Type="varchar" MaxLength="150" Nullable="false" />
         </EntityType>
-        <EntityType Name="Patient">
-          <Key>
-            <PropertyRef Name="PatientId" />
-          </Key>
-          <Property Name="PatientId" Type="varchar" MaxLength="15" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="150" Nullable="false" />
-        </EntityType>
         <EntityType Name="PatientForms">
           <Key>
             <PropertyRef Name="PatientFormId" />
@@ -121,18 +113,6 @@ warning 6002: The table/view 'PTEFDev.dbo.PatientListView' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PatientForms_Patient">
-          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
-          <End Role="PatientForms" Type="Self.PatientForms" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Patient">
-              <PropertyRef Name="PatientId" />
-            </Principal>
-            <Dependent Role="PatientForms">
-              <PropertyRef Name="PatientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Questions_FormType">
           <End Role="FormType" Type="Self.FormType" Multiplicity="1" />
           <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
@@ -148,7 +128,6 @@ warning 6002: The table/view 'PTEFDev.dbo.PatientListView' does not have a prima
         <EntityContainer Name="PTEFModelStoreContainer">
           <EntitySet Name="Answers" EntityType="Self.Answers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormType" EntityType="Self.FormType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PatientForms" EntityType="Self.PatientForms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AnswerListView" EntityType="Self.AnswerListView" store:Type="Views" store:Schema="dbo">
@@ -182,10 +161,6 @@ warning 6002: The table/view 'PTEFDev.dbo.PatientListView' does not have a prima
             <End Role="FormType" EntitySet="FormType" />
             <End Role="PatientForms" EntitySet="PatientForms" />
           </AssociationSet>
-          <AssociationSet Name="FK_PatientForms_Patient" Association="Self.FK_PatientForms_Patient">
-            <End Role="Patient" EntitySet="Patient" />
-            <End Role="PatientForms" EntitySet="PatientForms" />
-          </AssociationSet>
           <AssociationSet Name="FK_Questions_FormType" Association="Self.FK_Questions_FormType">
             <End Role="FormType" EntitySet="FormType" />
             <End Role="Questions" EntitySet="Questions" />
@@ -216,15 +191,6 @@ warning 6002: The table/view 'PTEFDev.dbo.PatientListView' does not have a prima
           <NavigationProperty Name="PatientForms" Relationship="Self.FK_PatientForms_FormType" FromRole="FormType" ToRole="PatientForms" />
           <NavigationProperty Name="Questions" Relationship="PTEFModel.FK_Questions_FormType" FromRole="FormType" ToRole="Question" />
         </EntityType>
-        <EntityType Name="Patient">
-          <Key>
-            <PropertyRef Name="PatientId" />
-          </Key>
-          <Property Name="PatientId" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="PatientForms" Relationship="Self.FK_PatientForms_Patient" FromRole="Patient" ToRole="PatientForms" />
-        </EntityType>
         <EntityType Name="PatientForm">
           <Key>
             <PropertyRef Name="PatientFormId" />
@@ -235,7 +201,6 @@ warning 6002: The table/view 'PTEFDev.dbo.PatientListView' does not have a prima
           <Property Name="CreatedOn" Type="DateTime" Precision="0" Nullable="false" />
           <Property Name="LastUpdatedOn" Type="DateTime" Precision="0" />
           <NavigationProperty Name="FormType" Relationship="Self.FK_PatientForms_FormType" FromRole="PatientForms" ToRole="FormType" />
-          <NavigationProperty Name="Patient" Relationship="Self.FK_PatientForms_Patient" FromRole="PatientForms" ToRole="Patient" />
           <NavigationProperty Name="Answers" Relationship="PTEFModel.FK_Answers_PatientForms" FromRole="PatientForm" ToRole="Answer" />
           <Property Name="FormDate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
@@ -251,29 +216,12 @@ warning 6002: The table/view 'PTEFDev.dbo.PatientListView' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PatientForms_Patient">
-          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
-          <End Role="PatientForms" Type="Self.PatientForm" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Patient">
-              <PropertyRef Name="PatientId" />
-            </Principal>
-            <Dependent Role="PatientForms">
-              <PropertyRef Name="PatientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="PTEFEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Answers" EntityType="Self.Answer" />
           <EntitySet Name="FormTypes" EntityType="Self.FormType" />
-          <EntitySet Name="Patients" EntityType="Self.Patient" />
           <EntitySet Name="PatientForms" EntityType="Self.PatientForm" />
           <AssociationSet Name="FK_PatientForms_FormType" Association="Self.FK_PatientForms_FormType">
             <End Role="FormType" EntitySet="FormTypes" />
-            <End Role="PatientForms" EntitySet="PatientForms" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PatientForms_Patient" Association="Self.FK_PatientForms_Patient">
-            <End Role="Patient" EntitySet="Patients" />
             <End Role="PatientForms" EntitySet="PatientForms" />
           </AssociationSet>
           <EntitySet Name="Questions" EntityType="PTEFModel.Question" />
@@ -391,15 +339,6 @@ warning 6002: The table/view 'PTEFDev.dbo.PatientListView' does not have a prima
               <MappingFragment StoreEntitySet="FormType">
                 <ScalarProperty Name="FormTypeId" ColumnName="FormTypeId" />
                 <ScalarProperty Name="FormTypeName" ColumnName="FormTypeName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Patients">
-            <EntityTypeMapping TypeName="PTEFModel.Patient">
-              <MappingFragment StoreEntitySet="Patient">
-                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

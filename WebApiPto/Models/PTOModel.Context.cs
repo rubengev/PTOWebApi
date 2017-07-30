@@ -27,7 +27,6 @@ namespace WebApiPto.Models
     
         public virtual DbSet<Answer> Answers { get; set; }
         public virtual DbSet<FormType> FormTypes { get; set; }
-        public virtual DbSet<Patient> Patients { get; set; }
         public virtual DbSet<PatientForm> PatientForms { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<PatientListView> PatientListViews { get; set; }
