@@ -21,7 +21,7 @@ namespace WebApiPto.Controllers
             {
                 items.Add(Mapper.MapToDto(item));
             }
-            return items;
+            return items.OrderBy(x => x.LastName).ThenBy(x=> x.FirstName); 
         }
 
         public PatientDto GetPatient(string id)
