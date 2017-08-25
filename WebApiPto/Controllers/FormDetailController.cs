@@ -27,7 +27,7 @@ namespace WebApiPto.Controllers
             {
                 return NotFound();
             }
-            IQueryable<Question> col = _db.Questions.Where(x => x.FormTypeId == formtypeid);
+            IQueryable<Question> col = _db.Questions.Where(x => x.FormTypeId == formtypeid).OrderBy(x=> x.QuestionIndex);
 
             List<QuestionDto> questions = new List<QuestionDto>();
             foreach (Question item in col)
