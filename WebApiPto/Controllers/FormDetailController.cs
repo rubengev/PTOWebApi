@@ -55,7 +55,7 @@ namespace WebApiPto.Controllers
                 return NotFound();
             }
 
-            IQueryable<AnswerListView> col = _db.AnswerListViews.Where(p => p.PatientFormId==id);
+            IQueryable<AnswerListView> col = _db.AnswerListViews.Where(p => p.PatientFormId==id).OrderBy(x => x.QuestionIndex);
 
             List<QuestionDto> questions = new List<QuestionDto>();
             foreach (AnswerListView item in col)
