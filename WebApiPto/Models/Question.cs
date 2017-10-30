@@ -20,6 +20,7 @@ namespace WebApiPto.Models
         public string QuestionText { get; set; }
         public bool DefaultAnswer { get; set; }
         public int QuestionIndex { get; set; }
+        public string TemplateText { get; set; }
     
         public virtual FormType FormType { get; set; }
     }

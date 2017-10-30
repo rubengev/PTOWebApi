@@ -13,7 +13,7 @@
           <Property Name="PatientFormId" Type="int" Nullable="false" />
           <Property Name="QuestionId" Type="int" Nullable="false" />
           <Property Name="AnswerChecked" Type="bit" Nullable="false" />
-          <Property Name="AnswerText" Type="nvarchar" MaxLength="2000" />
+          <Property Name="AnswerText" Type="nvarchar" MaxLength="4000" />
         </EntityType>
         <EntityType Name="FormType">
           <Key>
@@ -43,6 +43,7 @@
           <Property Name="QuestionText" Type="nvarchar" MaxLength="500" />
           <Property Name="DefaultAnswer" Type="bit" Nullable="false" />
           <Property Name="QuestionIndex" Type="int" Nullable="false" />
+          <Property Name="TemplateText" Type="nvarchar" MaxLength="4000" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'PTEFDev.dbo.AnswerListView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -178,7 +179,7 @@ warning 6002: The table/view 'PTEFDev.dbo.PatientListView' does not have a prima
           <Property Name="PatientFormId" Type="Int32" Nullable="false" />
           <Property Name="QuestionId" Type="Int32" Nullable="false" />
           <Property Name="AnswerChecked" Type="Boolean" Nullable="false" />
-          <Property Name="AnswerText" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="AnswerText" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PatientForm" Relationship="PTEFModel.FK_Answers_PatientForms" FromRole="Answer" ToRole="PatientForm" />
           <NavigationProperty Name="Question" Relationship="PTEFModel.FK_Answers_Questions" FromRole="Answer" ToRole="Question" />
         </EntityType>
@@ -251,6 +252,7 @@ warning 6002: The table/view 'PTEFDev.dbo.PatientListView' does not have a prima
           <Property Name="DefaultAnswer" Type="Boolean" Nullable="false" />
           <Property Name="QuestionIndex" Type="Int32" Nullable="false" />
           <NavigationProperty Name="FormType" Relationship="PTEFModel.FK_Questions_FormType" FromRole="Question" ToRole="FormType" />
+          <Property Name="TemplateText" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Questions_FormType">
           <End Type="PTEFModel.FormType" Role="FormType" Multiplicity="1" />
@@ -357,6 +359,7 @@ warning 6002: The table/view 'PTEFDev.dbo.PatientListView' does not have a prima
           <EntitySetMapping Name="Questions">
             <EntityTypeMapping TypeName="PTEFModel.Question">
               <MappingFragment StoreEntitySet="Questions">
+                <ScalarProperty Name="TemplateText" ColumnName="TemplateText" />
                 <ScalarProperty Name="QuestionIndex" ColumnName="QuestionIndex" />
                 <ScalarProperty Name="DefaultAnswer" ColumnName="DefaultAnswer" />
                 <ScalarProperty Name="QuestionText" ColumnName="QuestionText" />

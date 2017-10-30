@@ -54,7 +54,7 @@ namespace WebApiPto.Classes
                     Question = classMapFrom.QuestionText,
                     Type = classMapFrom.QuestionType,
                     Checked = classMapFrom.DefaultAnswer,
-                    Answer = ""
+                    Answer =  classMapFrom.TemplateText
                 };
             }
             return retval;
