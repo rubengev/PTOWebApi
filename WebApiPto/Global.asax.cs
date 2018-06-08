@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Configuration;
 
 namespace WebApiPto
 {
@@ -14,6 +15,7 @@ namespace WebApiPto
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            Classes.AppModule.ConnectionString = ConfigurationManager.AppSettings["PTEFOleDb"]; 
         }
     }
 }
