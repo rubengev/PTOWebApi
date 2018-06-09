@@ -15,7 +15,8 @@ namespace WebApiPto
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            Classes.AppModule.ConnectionString = ConfigurationManager.AppSettings["PTEFOleDb"]; 
+            //Classes.AppModule.ConnectionString = ConfigurationManager.AppSettings["PTEFOleDb"]; 
+            Classes.AppModule.ConnectionString = ConfigurationManager.ConnectionStrings["PTEFconnection"].ToString();
         }
     }
 }

@@ -21,14 +21,14 @@ namespace WebApiPto.Controllers
             List<PatientDto> items = new List<PatientDto>();
             string query = "Select * from PatientListView";
 
-            using (OleDbConnection con = new OleDbConnection(AppModule.ConnectionString))
+            using (SqlConnection con = new SqlConnection(AppModule.ConnectionString))
             {
-                OleDbCommand command = new OleDbCommand(query, con);
+                SqlCommand command = new SqlCommand(query, con);
 
                 try
                 {
                     con.Open();
-                    OleDbDataReader reader = command.ExecuteReader();
+                    SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
                         PatientDto patient = new PatientDto();
@@ -48,22 +48,23 @@ namespace WebApiPto.Controllers
                 }
             }
         }
-
+ 
         public PatientDto GetPatient(string id)
         {
-            string query = "Select * from PatientListView where PatientId = ?";
+            string query = "Select * from PatientListView where PatientId = @Id";
 
-            using (OleDbConnection con = new OleDbConnection(AppModule.ConnectionString))
+            using (SqlConnection con = new SqlConnection(AppModule.ConnectionString))
             {
-                OleDbCommand command = new OleDbCommand(query, con);
-                command.Parameters.AddWithValue("@Id", id);
+                SqlCommand command = new SqlCommand(query, con);
+                command.Parameters.Add("@Id", SqlDbType.VarChar);
+                command.Parameters["@Id"].Value = id;
 
                 PatientDto patient = new PatientDto();
 
                 try
                 {
                     con.Open();
-                    OleDbDataReader reader = command.ExecuteReader();
+                    SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
 
